@@ -1,0 +1,100 @@
+.import-page {
+  padding: 28px 34px;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.import-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.import-header p {
+  margin-top: 6px;
+  font-size: 18px;
+  color: #64748b;
+}
+
+/* CARD */
+.import-card {
+  margin-top: 28px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid #e5eaf3;
+  max-width: 1100px;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(37, 99, 235, 0.18),
+    0 16px 40px rgba(37, 99, 235, 0.18),
+    0 0 28px rgba(37, 99, 235, 0.30);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.import-card:hover {
+  transform: translateY(-2px);
+}
+.import-card h2 {
+  font-size: 24px;
+  margin: 0 0 6px;
+  color: #0f172a;
+}
+
+.import-card .subtitle {
+  font-size: 20px;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+/* UPLOAD BOX */
+.upload-box {
+  border: 2px dashed #dbe2f1;
+  border-radius: 16px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.upload-box:hover {
+  background: #f8fafc;
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: #64748b;
+}
+
+.select-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  background: #ffffff;
+  border: 1px solid #0f172a;
+  cursor: pointer;
+   color: #2a2f35;
+}
+
+.select-btn:hover {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+/* SUPPORTED COLUMNS */
+.supported-columns {
+  margin-top: 24px;
+  font-size: 16px;
+  color: #475569;
+}
+
+.supported-columns p {
+  margin-top: 6px;
+  line-height: 1.6;
+}

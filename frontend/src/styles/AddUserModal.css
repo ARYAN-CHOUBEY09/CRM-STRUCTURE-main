@@ -1,0 +1,183 @@
+/* ======================
+   MODAL OVERLAY
+====================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* ======================
+   MODAL CONTAINER
+====================== */
+.modal {
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 26px 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  animation: scaleIn 0.25s ease;
+}
+
+/* ======================
+   HEADER
+====================== */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+/* ======================
+   FORM
+====================== */
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal .form-group label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* INPUTS */
+.modal input,
+.modal select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  background: #ffffff;
+  color: #0f172a;
+  transition: 0.2s ease;
+}
+
+.modal input:focus,
+.modal select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+/* ======================
+   FOOTER BUTTONS
+====================== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.modal-actions button {
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Cancel */
+.modal-actions .cancel {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+/* Save */
+.modal-actions .save {
+  background: #2563eb;
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px; /* Leave space for the icon */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 0;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+}
+
+/* Hover effects for main buttons */
+.modal-actions .save:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.modal-actions .cancel:hover {
+  background: #f8fafc;
+}
+/* ======================
+   ANIMATION
+====================== */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 600px) {
+  .modal {
+    width: 90%;
+    padding: 22px;
+  }
+}

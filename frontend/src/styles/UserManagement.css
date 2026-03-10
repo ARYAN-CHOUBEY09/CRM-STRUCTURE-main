@@ -1,0 +1,145 @@
+/* PAGE */
+.user-page {
+  padding: 32px;
+}
+
+/* HEADER */
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.user-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.user-header p {
+  margin-top: 4px;
+  font-size: 18px;
+  color: #64748b;
+}
+
+/* ADD USER BUTTON */
+.add-user-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 14px 22px;  
+  font-size: 18px;     
+  font-weight: 600;
+  border-radius: 10px; 
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.add-user-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* CARD */
+.user-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 18px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+
+th:first-child {
+  padding-left: 32px; /* Adds space for the "User" header text */
+}
+
+td {
+  padding: 24px 20px; 
+  font-size: 17px;
+  color: #1e293b;
+  vertical-align: middle;
+  border-bottom: none; 
+}
+
+
+tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* TARGET THE FIRST COLUMN CELL */
+td:first-child {
+  padding-left: 32px; 
+}
+
+
+.user-info {
+  padding: 30px 16px;
+  display: flex;
+  align-items: center;    
+  justify-content: flex-start;
+  gap: 16px;
+  
+}
+
+.table-avatar {
+  display: block;
+  font-size: 28px;
+  color: #395174;
+  flex-shrink: 0;
+}
+
+.user-full-name {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+}
+/* ROLE PILL */
+.role-pill {
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
+  color: #1e3a8a;
+  background: #eef2ff;
+}
+
+/* STATUS */
+.status {
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.status.active {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}

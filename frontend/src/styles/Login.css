@@ -1,0 +1,127 @@
+/* ===== Reset (scoped to login only) ===== */
+.login-container,
+.login-container * {
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+.login-container * {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Full Page Container ===== */
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #f8fafc, #eef2f7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Brand ===== */
+.brand-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.brand-subtitle {
+  color: #64748b;
+  margin-bottom: 28px;
+  font-size: 15px;
+}
+
+/* ===== Card ===== */
+.login-card {
+  width: 420px;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Card Text ===== */
+.login-card h2 {
+  font-size: 22px;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 22px;
+}
+
+/* ===== Form ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+/* ===== Button ===== */
+.signin-btn {
+  width: 100%;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  transition: background 0.2s ease;
+}
+
+.signin-btn:hover {
+  background: #1e4fd8;
+}
+
+/* ===== Demo Text ===== */
+.demo-text {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .login-card {
+    width: 90%;
+    padding: 24px;
+  }
+
+  .brand-title {
+    font-size: 30px;
+  }
+}
