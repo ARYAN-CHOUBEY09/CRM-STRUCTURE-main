@@ -1,9 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import {
+  FaBars,
   FaCog,
   FaFileImport,
   FaShieldAlt,
   FaTachometerAlt,
+  FaTimes,
   FaUserCircle,
   FaUserCog,
   FaUsers,
@@ -23,7 +25,7 @@ const canAccessModule = (modules, moduleKey) => {
   return value === "View" || value === "Edit";
 };
 
-const Sidebar = ({ currentUser, onLogout, currentPermissions }) => {
+const Sidebar = ({ currentUser, onLogout, currentPermissions, isMobileOpen, onClose, onNavigateItem }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const visibleItems =
@@ -31,8 +33,13 @@ const Sidebar = ({ currentUser, onLogout, currentPermissions }) => {
       ? menuItems
       : menuItems.filter((item) => canAccessModule(currentPermissions, item.moduleKey));
 
+  const handleNavigate = (path) => {
+    navigate(path);
+    onNavigateItem?.();
+  };
+
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isMobileOpen ? "sidebar-open" : ""}`}>
       <div>
         <div className="sidebar-header">
           <div className="logo">
@@ -40,9 +47,15 @@ const Sidebar = ({ currentUser, onLogout, currentPermissions }) => {
             <span>Enterprise Solution</span>
           </div>
 
-          <button className="icon-button">
-            <FaCog />
-          </button>
+          <div className="sidebar-header-actions">
+            <button className="icon-button" type="button">
+              <FaCog />
+            </button>
+
+            <button className="icon-button sidebar-close-button" type="button" onClick={onClose}>
+              {isMobileOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
         </div>
 
         <hr className="sidebar-divider" />
@@ -52,7 +65,7 @@ const Sidebar = ({ currentUser, onLogout, currentPermissions }) => {
             <button
               key={item.label}
               className={`nav-item ${location.pathname === item.path ? "active" : ""}`}
-              onClick={() => navigate(item.path)}
+              onClick={() => handleNavigate(item.path)}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-text">{item.label}</span>
@@ -72,7 +85,13 @@ const Sidebar = ({ currentUser, onLogout, currentPermissions }) => {
           </div>
         </div>
 
-        <button className="signout-btn" onClick={onLogout}>
+        <button
+          className="signout-btn"
+          onClick={() => {
+            onLogout();
+            onNavigateItem?.();
+          }}
+        >
           Sign Out
         </button>
       </div>

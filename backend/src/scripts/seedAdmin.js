@@ -17,14 +17,26 @@ const createAdmin = async () => {
 
   const existingUser = await User.findOne({ username });
   if (existingUser) {
+    let didUpdate = false;
+
     if (existingUser.role !== "Admin") {
       existingUser.role = "Admin";
       existingUser.status = "Active";
+      didUpdate = true;
+    }
+
+    if (password) {
+      existingUser.password = await bcrypt.hash(password, 10);
+      didUpdate = true;
+    }
+
+    if (didUpdate) {
       await existingUser.save();
-      console.log(`User "${username}" promoted to Admin`);
+      console.log(`Admin "${username}" updated successfully`);
     } else {
       console.log(`Admin "${username}" already exists`);
     }
+
     return;
   }
 
