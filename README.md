@@ -53,6 +53,13 @@ MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_strong_secret_key
 PORT=5000
 JWT_EXPIRES_IN=7d
+CORS_ORIGIN=http://localhost:5173
+```
+
+Create `frontend/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
 ```
 
 ### 3. Create first admin
@@ -152,6 +159,69 @@ Frontend:
 npm run dev
 npm run build
 ```
+
+## Hostinger Deployment
+
+Recommended production setup:
+
+- host `frontend` as a static site on the main domain
+- host `backend` as a Node.js app on a subdomain like `api.yourdomain.com`
+- use MongoDB Atlas or another hosted MongoDB service
+
+### Backend deployment
+
+Deploy the `backend` folder and configure these environment variables:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_strong_secret_key
+JWT_EXPIRES_IN=7d
+CORS_ORIGIN=https://yourdomain.com,https://www.yourdomain.com
+```
+
+Commands:
+
+```powershell
+npm install
+npm start
+```
+
+Health check:
+
+```text
+https://api.yourdomain.com/api/health
+```
+
+Bootstrap the first admin once after deployment:
+
+```powershell
+$env:ADMIN_FULL_NAME="Admin User"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="ChangeMe123!"; npm run seed:admin
+```
+
+### Frontend deployment
+
+Deploy the `frontend` folder with this environment variable:
+
+```env
+VITE_API_URL=https://api.yourdomain.com/api
+```
+
+Build command:
+
+```powershell
+npm install
+npm run build
+```
+
+The project includes `frontend/public/.htaccess` so React Router routes continue to work after refresh on Apache-based hosting.
+
+### Final checks
+
+- verify login on the live domain
+- create, edit, and delete a customer
+- import a CSV file
+- create a user and test permissions
+- refresh `/app/dashboard` and `/app/customers`
 
 ## Notes
 

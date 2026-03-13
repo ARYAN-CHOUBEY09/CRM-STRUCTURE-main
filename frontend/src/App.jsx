@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./layouts/Layout";
@@ -55,15 +55,15 @@ function App() {
   const token = session?.token || "";
   const currentUser = session?.user || null;
 
-  const loadAppData = async (authToken) => {
+  const loadAppData = useEffectEvent(async (authToken, userRole) => {
     setIsBootstrapping(true);
     setError("");
 
     try {
-      const isAdmin = currentUser?.role === "Admin";
+      const isAdmin = userRole === "Admin";
       const rolePermissions = isAdmin
         ? { modules: FULL_ACCESS }
-        : await api.getPermissionsByRole(authToken, currentUser?.role).catch(() => ({ modules: NO_ACCESS }));
+        : await api.getPermissionsByRole(authToken, userRole).catch(() => ({ modules: NO_ACCESS }));
       const activePermissions = rolePermissions?.modules || NO_ACCESS;
       setCurrentPermissions(activePermissions);
 
@@ -118,13 +118,13 @@ function App() {
     } finally {
       setIsBootstrapping(false);
     }
-  };
+  });
 
   useEffect(() => {
-    if (token) {
-      loadAppData(token);
+    if (token && currentUser?.role) {
+      loadAppData(token, currentUser.role);
     }
-  }, [token]);
+  }, [currentUser?.role, token]);
 
   const handleLogin = async (credentials) => {
     const nextSession = await api.login(credentials);
@@ -259,7 +259,10 @@ function App() {
             {canEditCustomers ? <Route path="customers/edit/:id" element={<EditCustomer customers={customers} onSave={updateCustomer} users={users} />} /> : null}
             {canViewImports ? <Route path="import" element={<ImportData logs={importLogs} onImportCustomers={importCustomers} canEdit={canEditImports} />} /> : null}
             {currentUser?.role === "Admin" && canViewPermissions ? (
-              <Route path="permissions" element={<Permissions permissions={permissions} onSave={savePermissions} />} />
+              <Route
+                path="permissions"
+                element={<Permissions key={JSON.stringify(permissions)} permissions={permissions} onSave={savePermissions} />}
+              />
             ) : null}
             {canViewUsers ? <Route path="users" element={<Users users={users} onAddUser={addUser} onDeleteUser={deleteUser} canEdit={canEditUsers} />} /> : null}
             <Route path="*" element={<Navigate to={defaultAppPath} replace />} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../styles/Permissions.css";
 
 const PERMISSION_OPTIONS = [
@@ -29,13 +29,6 @@ export default function Permissions({ permissions, onSave }) {
     Manager: permissions.Manager || defaultModules,
     Staff: permissions.Staff || defaultModules,
   });
-
-  useEffect(() => {
-    setLocalPermissions({
-      Manager: permissions.Manager || defaultModules,
-      Staff: permissions.Staff || defaultModules,
-    });
-  }, [permissions]);
 
   const updatePermission = async (role, key, value) => {
     const nextRolePermissions = {
