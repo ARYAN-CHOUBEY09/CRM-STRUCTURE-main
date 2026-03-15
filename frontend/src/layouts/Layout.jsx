@@ -32,9 +32,9 @@ const Layout = ({ currentUser, onLogout, isLoading, error, currentPermissions })
       ) : null}
 
       <div
-        className="layout-sidebar"
+        className={`layout-sidebar ${isMobileMenuOpen ? "layout-sidebar-open" : ""}`}
         style={{
-          width: SIDEBAR_WIDTH,
+          width: isMobileViewport ? undefined : SIDEBAR_WIDTH,
         }}
       >
         <Sidebar

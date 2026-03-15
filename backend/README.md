@@ -42,6 +42,7 @@ $env:ADMIN_FULL_NAME="Admin User"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSW
 Notes:
 
 - If the username already exists and is not an admin, the script promotes that user to `Admin`
+- If the username already exists, the script does not change the current password unless `ADMIN_FORCE_PASSWORD_RESET=true` is set
 - Login does not require prior auth
 - User creation is admin-controlled
 

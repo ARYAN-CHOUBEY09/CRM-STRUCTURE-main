@@ -8,12 +8,14 @@ export const getUsers = async (_req, res) => {
 
 export const createUser = async (req, res) => {
   const { fullName, username, password, role, status } = req.body;
+  const normalizedUsername = username?.trim().toLowerCase();
+  const normalizedFullName = fullName?.trim();
 
-  if (!fullName || !username || !password) {
+  if (!normalizedFullName || !normalizedUsername || !password) {
     return res.status(400).json({ message: "fullName, username and password are required" });
   }
 
-  const existing = await User.findOne({ username: username.toLowerCase() });
+  const existing = await User.findOne({ username: normalizedUsername });
   if (existing) {
     return res.status(409).json({ message: "Username already exists" });
   }
@@ -24,8 +26,8 @@ export const createUser = async (req, res) => {
 
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await User.create({
-    fullName,
-    username,
+    fullName: normalizedFullName,
+    username: normalizedUsername,
     password: passwordHash,
     role: role || "Staff",
     status: status || "Active",
@@ -57,7 +59,7 @@ export const updateUser = async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
-  if (fullName !== undefined) user.fullName = fullName;
+  if (fullName !== undefined) user.fullName = fullName.trim();
   if (role !== undefined) user.role = role;
   if (status !== undefined) user.status = status;
   if (password) {

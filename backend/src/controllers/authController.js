@@ -4,12 +4,14 @@ import { signToken } from "../utils.js";
 
 export const register = async (req, res) => {
   const { fullName, username, password, role } = req.body;
+  const normalizedUsername = username?.trim().toLowerCase();
+  const normalizedFullName = fullName?.trim();
 
-  if (!fullName || !username || !password) {
+  if (!normalizedFullName || !normalizedUsername || !password) {
     return res.status(400).json({ message: "fullName, username and password are required" });
   }
 
-  const existing = await User.findOne({ username: username.toLowerCase() });
+  const existing = await User.findOne({ username: normalizedUsername });
   if (existing) {
     return res.status(409).json({ message: "Username already exists" });
   }
@@ -17,8 +19,8 @@ export const register = async (req, res) => {
   const passwordHash = await bcrypt.hash(password, 10);
 
   const user = await User.create({
-    fullName,
-    username,
+    fullName: normalizedFullName,
+    username: normalizedUsername,
     password: passwordHash,
     role: role || "Staff",
   });
@@ -37,14 +39,19 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
+  const normalizedUsername = username?.trim().toLowerCase();
 
-  if (!username || !password) {
+  if (!normalizedUsername || !password) {
     return res.status(400).json({ message: "username and password are required" });
   }
 
-  const user = await User.findOne({ username: username.toLowerCase() });
+  const user = await User.findOne({ username: normalizedUsername });
   if (!user) {
     return res.status(401).json({ message: "Invalid credentials" });
+  }
+
+  if (user.status !== "Active") {
+    return res.status(403).json({ message: "User account is inactive" });
   }
 
   const isMatch = await bcrypt.compare(password, user.password);

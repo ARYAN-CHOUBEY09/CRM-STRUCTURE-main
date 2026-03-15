@@ -36,7 +36,7 @@ const Login = ({ onLogin, isAuthenticated }) => {
 
   return (
     <div className="login-container">
-      <h1 className="brand-title">Nexus CRM</h1>
+      <h1 className="brand-title">CRM</h1>
       <p className="brand-subtitle">Sign in to your enterprise account</p>
 
       <div className="login-card">

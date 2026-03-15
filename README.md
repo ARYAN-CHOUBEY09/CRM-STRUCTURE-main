@@ -56,7 +56,7 @@ JWT_EXPIRES_IN=7d
 CORS_ORIGIN=http://localhost:5173
 ```
 
-Create `frontend/.env`:
+Create `frontend/.env` for local development:
 
 ```env
 VITE_API_URL=http://localhost:5000/api
@@ -198,9 +198,18 @@ Bootstrap the first admin once after deployment:
 $env:ADMIN_FULL_NAME="Admin User"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="ChangeMe123!"; npm run seed:admin
 ```
 
+If you need to intentionally reset an existing admin password:
+
+```powershell
+$env:ADMIN_FULL_NAME="Admin User"; $env:ADMIN_USERNAME="admin"; $env:ADMIN_PASSWORD="ChangeMe123!"; $env:ADMIN_FORCE_PASSWORD_RESET="true"; npm run seed:admin
+```
+
 ### Frontend deployment
 
-Deploy the `frontend` folder with this environment variable:
+Build and deploy the `frontend/dist` output as static files. If the frontend and backend share the
+same domain, `VITE_API_URL` can be omitted because the app defaults to `/api`.
+
+If you are using a separate backend domain, set:
 
 ```env
 VITE_API_URL=https://api.yourdomain.com/api
@@ -213,7 +222,10 @@ npm install
 npm run build
 ```
 
-The project includes `frontend/public/.htaccess` so React Router routes continue to work after refresh on Apache-based hosting.
+Do not use `npm run preview` in production. Serve the built files from Nginx or Apache instead.
+
+For Nginx, a sample production config is included at `frontend/nginx.conf.example`.
+The project also includes `frontend/public/.htaccess` so React Router routes continue to work after refresh on Apache-based hosting.
 
 ### Final checks
 

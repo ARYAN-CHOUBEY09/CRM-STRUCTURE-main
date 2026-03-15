@@ -1,0 +1,31 @@
+server {
+    server_name crm.nimbusbooks.us;
+
+    root /var/www/crm-frontend;
+    index index.html;
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:5000/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/crm.nimbusbooks.us/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/crm.nimbusbooks.us/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+}
+
+server {
+    listen 80;
+    server_name crm.nimbusbooks.us;
+    return 301 https://$host$request_uri;
+}

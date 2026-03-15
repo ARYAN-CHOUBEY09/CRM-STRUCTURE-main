@@ -36,8 +36,12 @@
 
 @media (max-width: 900px) {
   .layout-sidebar {
-    width: 100%;
+    width: min(320px, calc(100vw - 36px));
     pointer-events: none;
+  }
+
+  .layout-sidebar.layout-sidebar-open {
+    pointer-events: auto;
   }
 
   .layout-main {

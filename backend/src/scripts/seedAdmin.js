@@ -7,6 +7,7 @@ import { User } from "../models/User.js";
 const fullName = process.env.ADMIN_FULL_NAME || "Admin User";
 const username = (process.env.ADMIN_USERNAME || "").trim().toLowerCase();
 const password = process.env.ADMIN_PASSWORD || "";
+const forcePasswordReset = String(process.env.ADMIN_FORCE_PASSWORD_RESET || "").toLowerCase() === "true";
 
 const createAdmin = async () => {
   if (!username || !password) {
@@ -25,7 +26,7 @@ const createAdmin = async () => {
       didUpdate = true;
     }
 
-    if (password) {
+    if (password && forcePasswordReset) {
       existingUser.password = await bcrypt.hash(password, 10);
       didUpdate = true;
     }
@@ -34,7 +35,7 @@ const createAdmin = async () => {
       await existingUser.save();
       console.log(`Admin "${username}" updated successfully`);
     } else {
-      console.log(`Admin "${username}" already exists`);
+      console.log(`Admin "${username}" already exists; password left unchanged`);
     }
 
     return;
