@@ -4,7 +4,7 @@ import "../styles/Login.css";
 
 const Login = ({ onLogin, isAuthenticated }) => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ username: "admin", password: "" });
+  const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -49,7 +49,7 @@ const Login = ({ onLogin, isAuthenticated }) => {
             <input
               name="username"
               type="text"
-              placeholder="admin"
+              
               value={form.username}
               onChange={handleChange}
             />
@@ -60,7 +60,7 @@ const Login = ({ onLogin, isAuthenticated }) => {
             <input
               name="password"
               type="password"
-              placeholder="Password"
+  
               value={form.password}
               onChange={handleChange}
             />

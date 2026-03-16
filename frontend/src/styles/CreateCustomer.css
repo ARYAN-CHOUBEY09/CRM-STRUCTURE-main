@@ -246,3 +246,13 @@
   width: 100%;
   padding: 12px 40px 12px 12px;
 }
+@media (max-width: 980px) {
+  .create-customer-page { padding: 20px; }
+  .create-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .card { padding: 20px; }
+  .form-grid, .two-column { grid-template-columns: 1fr; gap: 16px; }
+  .form-row { flex-direction: column; gap: 12px; }
+  .checkbox-row { flex-wrap: wrap; gap: 8px; }
+  .form-actions { flex-direction: column; align-items: stretch; }
+  .btn { width: 100%; }
+}

@@ -201,12 +201,12 @@
   overflow: hidden;
 }
 
-.table-header {
+.table-header .table-row {
   background: #f0efef;
   display: grid;
-  grid-template-columns: 2.2fr 1fr 1.2fr 1.2fr 1.4fr 1.2fr 1fr 1fr;
+  grid-template-columns: 3fr 1.5fr 1.5fr 1.5fr 2fr 2.5fr 1.5fr 1fr;
   padding: 16px 20px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #475569;
   border-bottom: 1px solid #e5eaf3;
@@ -225,14 +225,6 @@
   overflow: visible;
 }
 
-.table-header, .table-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1.2fr 1fr 1.2fr 2fr 1fr 0.6fr;
-  padding: 16px 20px;
-  align-items: center;
-  border-bottom: 1px solid #e5eaf3;
-}
-
 .col-stack {
   display: flex;
   flex-direction: column;
@@ -240,10 +232,10 @@
   justify-content: center;
 }
 
-.row-name { font-weight: 700; color: #0f172a; font-size: 15px; }
-.row-bold { font-weight: 600; color: #0f172a; font-size: 15px; }
-.row-subtext { font-size: 13px; color: #64748b; }
-.row-email { color: #2563eb; font-size: 14px; }
+.row-name { font-weight: 700; color: #0f172a; font-size: 18px; }
+.row-bold { font-weight: 600; color: #0f172a; font-size: 18px; }
+.row-subtext { font-size: 16px; color: #64748b; }
+.row-email { color: #2563eb; font-size: 16px; }
 
 /* Status Badges */
 .status-badge {
@@ -305,3 +297,21 @@
 
 .action-opt:hover { background: #f8fafc; }
 .action-opt.delete { color: #ef4444; border-top: 1px solid #f1f5f9; }
+/* Responsive hooks */
+@media (max-width: 1024px) {
+  .customers-page { padding: 18px 14px; }
+  .customers-header { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .customers-actions { width: 100%; flex-wrap: wrap; gap: 8px; }
+  .customers-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
+  .status-btn { min-width: 0; width: 100%; justify-content: space-between; }
+  .customers-table { overflow-x: auto; }
+  .table-header, .table-row { grid-template-columns: 1fr; padding: 12px; }
+  .table-header { font-size: 14px; font-weight: 700; }
+  .table-row { border-bottom: 1px solid #e5eaf3; margin-bottom: 4px; }
+  .table-row > * { margin-bottom: 8px; }
+}
+
+@media (max-width: 640px) {
+  .customers-page { padding: 12px 10px; }
+  .btn { width: 100%; justify-content: center; }
+}
