@@ -1,4 +1,11 @@
 /* =========================
+   CSS RESET / BASE
+========================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* =========================
    PAGE LAYOUT
 ========================= */
 .customers-page {
@@ -13,26 +20,29 @@
 .customers-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 22px;
+  gap: 16px;
 }
 
 .customers-header h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 700;
   color: #0f172a;
 }
 
 .customers-header p {
   margin-top: 6px;
+  margin-bottom: 0;
   color: #64748b;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .customers-actions {
   display: flex;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 /* =========================
@@ -42,12 +52,14 @@
   height: 44px;
   padding: 0 18px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn.secondary {
@@ -56,11 +68,20 @@
   color: #0f172a;
 }
 
+.btn.secondary:hover {
+  background: #f1f5f9;
+}
+
 .btn.primary {
   background: #2563eb;
   color: #ffffff;
   border: none;
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.btn.primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.4);
 }
 
 /* =========================
@@ -75,6 +96,7 @@
   border-radius: 14px;
   padding: 14px;
   margin-bottom: 22px;
+  flex-wrap: wrap;
 }
 
 /* =========================
@@ -82,11 +104,12 @@
 ========================= */
 .search-box {
   flex: 1;
+  min-width: 200px;
   display: flex;
   align-items: center;
   gap: 10px;
   border: 1px solid #dbe2f1;
-  padding: 12px 14px;
+  padding: 10px 14px;
   border-radius: 10px;
   background: #f9fbfd;
   color: #413f3f;
@@ -96,7 +119,7 @@
   border: none;
   outline: none;
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   background: transparent;
   color: #0f172a;
 }
@@ -116,16 +139,15 @@
   border-radius: 10px;
   border: 1px solid #dbe2f1;
   background: #ffffff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: #0f172a;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 .status-btn:hover {
@@ -134,6 +156,7 @@
 
 .status-btn svg {
   color: #64748b;
+  flex-shrink: 0;
 }
 
 /* =========================
@@ -143,14 +166,13 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-
   width: 230px;
   background: #ffffff;
   border-radius: 14px;
   padding: 6px 0;
-
   box-shadow: 0 24px 48px rgba(15, 23, 42, 0.15);
-  z-index: 100;
+  z-index: 200;
+  border: 1px solid #e5eaf3;
 }
 
 /* =========================
@@ -160,13 +182,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-
   padding: 12px 16px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: #0f172a;
-
   cursor: pointer;
+  transition: background 0.1s ease;
 }
 
 .status-item:hover {
@@ -185,76 +206,103 @@
   align-items: center;
   justify-content: center;
   color: #2563eb;
+  flex-shrink: 0;
 }
 
 .tick-placeholder {
   width: 20px;
+  flex-shrink: 0;
 }
 
 /* =========================
-   TABLE
+   TABLE — DESKTOP
 ========================= */
 .customers-table {
   background: #ffffff;
   border-radius: 14px;
   border: 1px solid #e5eaf3;
-  overflow: hidden;
+  overflow: hidden; /* single, correct declaration */
 }
 
 .table-header .table-row {
   background: #f0efef;
   display: grid;
   grid-template-columns: 3fr 1.5fr 1.5fr 1.5fr 2fr 2.5fr 1.5fr 1fr;
-  padding: 16px 20px;
-  font-size: 18px;
-  font-weight: 600;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 700;
   color: #475569;
   border-bottom: 1px solid #e5eaf3;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-body .table-row {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr 1.5fr 1.5fr 2fr 2.5fr 1.5fr 1fr;
+  padding: 16px 20px;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.1s ease;
+}
+
+.table-body .table-row:last-child {
+  border-bottom: none;
+}
+
+.table-body .table-row:hover {
+  background: #fafbfe;
 }
 
 .table-empty {
   padding: 60px 20px;
   text-align: center;
   color: #64748b;
-  font-size: 18px;
-}
-.customers-table {
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid #e5eaf3;
-  overflow: visible;
+  font-size: 16px;
 }
 
+/* =========================
+   CELL CONTENT
+========================= */
 .col-stack {
   display: flex;
   flex-direction: column;
   gap: 2px;
   justify-content: center;
+  overflow: hidden;
 }
 
-.row-name { font-weight: 700; color: #0f172a; font-size: 18px; }
-.row-bold { font-weight: 600; color: #0f172a; font-size: 18px; }
-.row-subtext { font-size: 16px; color: #64748b; }
-.row-email { color: #2563eb; font-size: 16px; }
+.row-name    { font-weight: 700; color: #0f172a; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-bold    { font-weight: 600; color: #0f172a; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-subtext { font-size: 13px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-email   { color: #2563eb; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Status Badges */
+/* =========================
+   STATUS BADGES
+========================= */
 .status-badge {
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   display: inline-block;
-  align-items: center;
-  justify-content: center;
-  min-width: 80px;
+  white-space: nowrap;
 }
-.status-badge.active { background: #ecfdf5; color: #10b981; }
+
+.status-badge.active {
+  background: #ecfdf5;
+  color: #10b981;
+}
+
 .status-badge.other {
-  background: #f1f5f9; /* Light Grey */
-  color: #0f172a;      /* Solid Black */
+  background: #f1f5f9;
+  color: #0f172a;
   border: 1px solid #e2e8f0;
 }
-/* Action Menu Positioning */
+
+/* =========================
+   ROW ACTION MENU
+========================= */
 .row-actions {
   position: relative;
   display: flex;
@@ -268,20 +316,25 @@
   color: #94a3b8;
   padding: 8px;
   border-radius: 6px;
+  transition: background 0.1s ease, color 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.dots-btn:hover { background: #f1f5f9; color: #0f172a; }
+.dots-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
 
 .action-menu {
-  position: absolute;
-  right: 0;
-  top: 100%; /* Positions it directly below the 3-dots */
+  position: fixed; /* fixed avoids overflow clipping inside table */
   background: white;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  width: 130px;
-  z-index: 9999; 
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  width: 150px;
+  z-index: 9999;
   padding: 4px 0;
 }
 
@@ -292,26 +345,211 @@
   gap: 10px;
   font-size: 14px;
   cursor: pointer;
-  color: #000000;
+  color: #0f172a;
+  transition: background 0.1s ease;
 }
 
-.action-opt:hover { background: #f8fafc; }
-.action-opt.delete { color: #ef4444; border-top: 1px solid #f1f5f9; }
-/* Responsive hooks */
+.action-opt:hover {
+  background: #f8fafc;
+}
+
+.action-opt.delete {
+  color: #ef4444;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* =========================
+   CARD LABEL (mobile only, hidden on desktop)
+========================= */
+.card-label {
+  display: none;
+}
+
+/* =========================
+   RESPONSIVE — TABLET (≤1024px)
+========================= */
 @media (max-width: 1024px) {
-  .customers-page { padding: 18px 14px; }
-  .customers-header { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .customers-actions { width: 100%; flex-wrap: wrap; gap: 8px; }
-  .customers-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
-  .status-btn { min-width: 0; width: 100%; justify-content: space-between; }
-  .customers-table { overflow-x: auto; }
-  .table-header, .table-row { grid-template-columns: 1fr; padding: 12px; }
-  .table-header { font-size: 14px; font-weight: 700; }
-  .table-row { border-bottom: 1px solid #e5eaf3; margin-bottom: 4px; }
-  .table-row > * { margin-bottom: 8px; }
+  .customers-page {
+    padding: 20px 18px;
+  }
+
+  .customers-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .customers-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .customers-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .search-box {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .status-filter {
+    width: 100%;
+  }
+
+  .status-btn {
+    min-width: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Collapse table to 5 columns on tablet — hide less critical cols */
+  .table-header .table-row,
+  .table-body .table-row {
+    grid-template-columns: 2.5fr 1.5fr 1.5fr 2fr 1fr;
+  }
+
+  /* Hide phone and last-seen columns on tablet */
+  .col-phone,
+  .col-seen {
+    display: none;
+  }
 }
 
-@media (max-width: 640px) {
-  .customers-page { padding: 12px 10px; }
-  .btn { width: 100%; justify-content: center; }
+/* =========================
+   RESPONSIVE — MOBILE (≤768px): Card layout
+========================= */
+@media (max-width: 768px) {
+  .customers-page {
+    padding: 16px 12px;
+  }
+
+  .customers-header h1 {
+    font-size: 22px;
+  }
+
+  .customers-header p {
+    font-size: 13px;
+  }
+
+  /* Hide the table header entirely on mobile */
+  .table-header {
+    display: none;
+  }
+
+  /* Each row becomes a card */
+  .table-body .table-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    border-bottom: none;
+    margin: 0 12px 12px;
+    border: 1px solid #e5eaf3;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+  }
+
+  /* Card header: name + status + 3-dots */
+  .table-body .table-row > *:first-child {
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  /* All other cells become labelled rows */
+  .table-body .table-row > *:not(:first-child):not(:last-child) {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 14px;
+    border-bottom: 1px solid #f8fafc;
+    gap: 8px;
+  }
+
+  /* Show card labels on mobile */
+  .card-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    min-width: 80px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .row-actions {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+
+
+  .table-body .table-row {
+    position: relative;
+  }
+
+  .col-phone,
+  .col-seen {
+    display: flex;
+  }
+
+  .row-name,
+  .row-bold {
+    font-size: 14px;
+  }
+
+  .row-subtext,
+  .row-email {
+    font-size: 12px;
+  }
+
+
+  .action-menu {
+    width: 140px;
+  }
+
+  .btn {
+    font-size: 14px;
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  .customers-table {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+ 
+  .customers-table {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .customers-page {
+    padding: 12px 10px;
+  }
+
+  .customers-actions .btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 13px;
+    padding: 0 10px;
+  }
+
+  .status-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .card-label {
+    min-width: 70px;
+  }
 }
