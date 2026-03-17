@@ -4,10 +4,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./layouts/Layout";
 import { api, clearStoredSession, getStoredSession, setStoredSession } from "./lib/api";
 import CreateCustomer from "./pages/CreateCustomer";
+import CreateLicense from "./pages/CreateLicense";
 import Customers from "./pages/Customers";
 import Dashboard from "./pages/Dashboard";
 import EditCustomer from "./pages/EditCustomer";
+import EditLicense from "./pages/EditLicense";
 import ImportData from "./pages/ImportData";
+import Licenses from "./pages/Licenses";
 import Login from "./pages/Login";
 import Permissions from "./pages/Permissions";
 import Users from "./pages/UserManagement";
@@ -15,6 +18,7 @@ import Users from "./pages/UserManagement";
 const FULL_ACCESS = {
   dashboard: "Edit",
   customers: "Edit",
+  licenses: "Edit",
   imports: "Edit",
   users: "Edit",
   permissions: "Edit",
@@ -23,6 +27,7 @@ const FULL_ACCESS = {
 const NO_ACCESS = {
   dashboard: "No Access",
   customers: "No Access",
+  licenses: "No Access",
   imports: "No Access",
   users: "No Access",
   permissions: "No Access",
@@ -45,6 +50,7 @@ const hasModuleAccess = (modules, moduleKey, requiredLevel = "View") => {
 function App() {
   const [session, setSession] = useState(() => getStoredSession());
   const [customers, setCustomers] = useState([]);
+  const [licenses, setLicenses] = useState([]);
   const [users, setUsers] = useState([]);
   const [permissions, setPermissions] = useState({ Manager: null, Staff: null });
   const [currentPermissions, setCurrentPermissions] = useState(NO_ACCESS);
@@ -77,6 +83,10 @@ function App() {
         requests.push(api.getCustomers(authToken).then((data) => ({ key: "customers", data })));
       }
 
+      if (isAdmin || hasModuleAccess(activePermissions, "licenses")) {
+        requests.push(api.getLicenses(authToken).then((data) => ({ key: "licenses", data })));
+      }
+
       if (isAdmin || hasModuleAccess(activePermissions, "imports")) {
         requests.push(api.getImportLogs(authToken).then((data) => ({ key: "imports", data })));
       }
@@ -90,6 +100,7 @@ function App() {
 
       setUsers([]);
       setCustomers([]);
+      setLicenses([]);
       setImportLogs([]);
       setPermissions({ Manager: null, Staff: null });
 
@@ -99,6 +110,9 @@ function App() {
         }
         if (key === "customers") {
           setCustomers(data);
+        }
+        if (key === "licenses") {
+          setLicenses(data);
         }
         if (key === "imports") {
           setImportLogs(data);
@@ -111,9 +125,11 @@ function App() {
         }
       });
     } catch (loadError) {
-      clearStoredSession();
-      setSession(null);
-      setCurrentPermissions(NO_ACCESS);
+      if (loadError?.status === 401) {
+        clearStoredSession();
+        setSession(null);
+        setCurrentPermissions(NO_ACCESS);
+      }
       setError(loadError.message);
     } finally {
       setIsBootstrapping(false);
@@ -137,6 +153,7 @@ function App() {
     clearStoredSession();
     setSession(null);
     setCustomers([]);
+    setLicenses([]);
     setUsers([]);
     setCurrentPermissions(NO_ACCESS);
     setPermissions({ Manager: null, Staff: null });
@@ -166,6 +183,21 @@ function App() {
   const deleteCustomer = async (id) => {
     await api.deleteCustomer(token, id);
     setCustomers((prev) => prev.filter((customer) => customer.id !== id));
+  };
+
+  const addLicense = async (newLicense) => {
+    const createdLicense = await api.createLicense(token, newLicense);
+    setLicenses((prev) => [createdLicense, ...prev]);
+  };
+
+  const updateLicense = async (updatedData) => {
+    const updatedLicense = await api.updateLicense(token, updatedData.id, updatedData);
+    setLicenses((prev) => prev.map((license) => (license.id === updatedLicense.id ? updatedLicense : license)));
+  };
+
+  const deleteLicense = async (id) => {
+    await api.deleteLicense(token, id);
+    setLicenses((prev) => prev.filter((license) => license.id !== id));
   };
 
   const savePermissions = async (role, modules) => {
@@ -215,6 +247,8 @@ function App() {
   const canViewDashboard = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "dashboard");
   const canViewCustomers = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "customers");
   const canEditCustomers = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "customers", "Edit");
+  const canViewLicenses = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "licenses");
+  const canEditLicenses = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "licenses", "Edit");
   const canViewImports = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "imports");
   const canEditImports = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "imports", "Edit");
   const canViewUsers = currentUser?.role === "Admin" || hasModuleAccess(currentPermissions, "users");
@@ -224,6 +258,8 @@ function App() {
     ? "/app/dashboard"
     : canViewCustomers
       ? "/app/customers"
+      : canViewLicenses
+        ? "/app/licenses"
       : canViewImports
         ? "/app/import"
         : canViewUsers
@@ -257,6 +293,9 @@ function App() {
             ) : null}
             {canEditCustomers ? <Route path="customers/create" element={<CreateCustomer onSave={addCustomer} users={users} />} /> : null}
             {canEditCustomers ? <Route path="customers/edit/:id" element={<EditCustomer customers={customers} onSave={updateCustomer} users={users} />} /> : null}
+            {canViewLicenses ? <Route path="licenses" element={<Licenses licenses={licenses} onDelete={deleteLicense} canEdit={canEditLicenses} />} /> : null}
+            {canEditLicenses ? <Route path="licenses/create" element={<CreateLicense onSave={addLicense} />} /> : null}
+            {canEditLicenses ? <Route path="licenses/edit/:id" element={<EditLicense licenses={licenses} onSave={updateLicense} />} /> : null}
             {canViewImports ? <Route path="import" element={<ImportData logs={importLogs} onImportCustomers={importCustomers} canEdit={canEditImports} />} /> : null}
             {currentUser?.role === "Admin" && canViewPermissions ? (
               <Route

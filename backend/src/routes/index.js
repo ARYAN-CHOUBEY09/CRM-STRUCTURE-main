@@ -2,6 +2,7 @@ import { Router } from "express";
 import authRoutes from "./authRoutes.js";
 import customerRoutes from "./customerRoutes.js";
 import importRoutes from "./importRoutes.js";
+import licenseRoutes from "./licenseRoutes.js";
 import permissionRoutes from "./permissionRoutes.js";
 import userRoutes from "./userRoutes.js";
 import { requireAuth, requireModuleAccess } from "../middleware/authMiddleware.js";
@@ -15,6 +16,7 @@ router.get("/health", (_req, res) => {
 router.use("/auth", authRoutes);
 router.use("/users", requireAuth, requireModuleAccess("users"), userRoutes);
 router.use("/customers", requireAuth, requireModuleAccess("customers"), customerRoutes);
+router.use("/licenses", requireAuth, requireModuleAccess("licenses"), licenseRoutes);
 router.use("/permissions", requireAuth, permissionRoutes);
 router.use("/imports", requireAuth, requireModuleAccess("imports"), importRoutes);
 

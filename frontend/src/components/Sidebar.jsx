@@ -3,6 +3,7 @@ import {
   FaBars,
   FaCog,
   FaFileImport,
+  FaKey,
   FaShieldAlt,
   FaTachometerAlt,
   FaTimes,
@@ -15,6 +16,7 @@ import "../styles/Sidebar.css";
 const menuItems = [
   { label: "Dashboard", icon: <FaTachometerAlt />, path: "/app/dashboard", moduleKey: "dashboard" },
   { label: "Customers", icon: <FaUsers />, path: "/app/customers", moduleKey: "customers" },
+  { label: "Licenses", icon: <FaKey />, path: "/app/licenses", moduleKey: "licenses" },
   { label: "Import Data", icon: <FaFileImport />, path: "/app/import", moduleKey: "imports" },
   { label: "Permissions", icon: <FaShieldAlt />, path: "/app/permissions", moduleKey: "permissions" },
   { label: "User Management", icon: <FaUserCog />, path: "/app/users", moduleKey: "users" },

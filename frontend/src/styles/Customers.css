@@ -237,6 +237,11 @@
   gap: 10px;
 }
 
+.table-header .table-row.licenses-grid,
+.table-body .table-row.licenses-grid {
+  grid-template-columns: 2fr 1.8fr 2.4fr 1.3fr 0.7fr;
+}
+
 .table-header .table-row {
   background: #f0efef;
   font-size: 12px;
@@ -416,6 +421,11 @@
   .table-header .table-row,
   .table-body .table-row {
     grid-template-columns: 2.5fr 1.5fr 1.5fr 2fr 1fr;
+  }
+
+  .table-header .table-row.licenses-grid,
+  .table-body .table-row.licenses-grid {
+    grid-template-columns: 1.6fr 1.6fr 2fr 1.2fr 0.7fr;
   }
 
   /* Hide phone and last-seen columns on tablet */

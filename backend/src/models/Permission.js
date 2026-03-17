@@ -11,6 +11,7 @@ const permissionSchema = new mongoose.Schema(
     modules: {
       dashboard: { type: String, default: "View" },
       customers: { type: String, default: "Edit" },
+      licenses: { type: String, default: "Edit" },
       imports: { type: String, default: "View" },
       users: { type: String, default: "No Access" },
       permissions: { type: String, default: "No Access" },

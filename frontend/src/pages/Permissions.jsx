@@ -10,6 +10,7 @@ const PERMISSION_OPTIONS = [
 const modules = [
   { key: "dashboard", label: "Dashboard" },
   { key: "customers", label: "Customers" },
+  { key: "licenses", label: "Licenses" },
   { key: "imports", label: "Imports" },
   { key: "users", label: "Users" },
   { key: "permissions", label: "Permissions" },
@@ -18,6 +19,7 @@ const modules = [
 const defaultModules = {
   dashboard: "View",
   customers: "Edit",
+  licenses: "Edit",
   imports: "View",
   users: "No Access",
   permissions: "No Access",
@@ -26,8 +28,8 @@ const defaultModules = {
 export default function Permissions({ permissions, onSave }) {
   const [open, setOpen] = useState(null);
   const [localPermissions, setLocalPermissions] = useState({
-    Manager: permissions.Manager || defaultModules,
-    Staff: permissions.Staff || defaultModules,
+    Manager: { ...defaultModules, ...(permissions.Manager || {}) },
+    Staff: { ...defaultModules, ...(permissions.Staff || {}) },
   });
 
   const updatePermission = async (role, key, value) => {

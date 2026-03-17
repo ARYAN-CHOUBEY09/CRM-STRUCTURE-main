@@ -42,7 +42,9 @@ const request = async (path, { method = "GET", token, body } = {}) => {
   const data = await response.json().catch(() => null);
 
   if (!response.ok) {
-    throw new Error(data?.message || `Request failed with status ${response.status}`);
+    const error = new Error(data?.message || `Request failed with status ${response.status}`);
+    error.status = response.status;
+    throw error;
   }
 
   return data;
@@ -106,6 +108,22 @@ export const buildCustomerPayload = (customer) => ({
   notes: serializeCustomerMeta(customer),
 });
 
+export const normalizeLicense = (license) => ({
+  id: license._id,
+  product: license.product || "",
+  licenseNumber: license.licenseNumber || "",
+  productKey: license.productKey || "",
+  expiryDate: license.expiryDate || "N/A",
+  createdAt: license.createdAt,
+});
+
+export const buildLicensePayload = (license) => ({
+  product: license.product,
+  licenseNumber: license.licenseNumber,
+  productKey: license.productKey,
+  expiryDate: license.expiryDate || "N/A",
+});
+
 export const api = {
   login: (credentials) => request("/auth/login", { method: "POST", body: credentials }),
   getUsers: (token) => request("/users", { token }),
@@ -132,6 +150,27 @@ export const api = {
     return normalizeCustomer(data.customer);
   },
   deleteCustomer: (token, id) => request(`/customers/${id}`, { method: "DELETE", token }),
+  getLicenses: async (token) => {
+    const licenses = await request("/licenses", { token });
+    return licenses.map(normalizeLicense);
+  },
+  createLicense: async (token, payload) => {
+    const data = await request("/licenses", {
+      method: "POST",
+      token,
+      body: buildLicensePayload(payload),
+    });
+    return normalizeLicense(data.license);
+  },
+  updateLicense: async (token, id, payload) => {
+    const data = await request(`/licenses/${id}`, {
+      method: "PUT",
+      token,
+      body: buildLicensePayload(payload),
+    });
+    return normalizeLicense(data.license);
+  },
+  deleteLicense: (token, id) => request(`/licenses/${id}`, { method: "DELETE", token }),
   getPermissionsByRole: (token, role) => request(`/permissions/${role}`, { token }),
   savePermissionsByRole: (token, role, modules) =>
     request(`/permissions/${role}`, { method: "PUT", token, body: { modules } }),
