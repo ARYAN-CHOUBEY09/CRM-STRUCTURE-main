@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
-import "../styles/AddUsermodal.css";
+import "../styles/AddUserModal.css";
 
 const AddUserModal = ({ onClose, onAddUser }) => {
   const [showPassword, setShowPassword] = useState(false);
