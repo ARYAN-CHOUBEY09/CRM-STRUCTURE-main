@@ -140,23 +140,27 @@ const Customers = ({ customers, onDelete, canEdit, canViewImports }) => {
 
       <div className="customers-table">
         <div className="table-header">
-          <span>Name & Company</span>
-          <span>Status</span>
-          <span>Subscription</span>
-          <span>Expiration</span>
-          <span>Sale & Payment</span>
-          <span>Contact</span>
-          <span>Assigned</span>
-          <span>Action</span>
+          <div className="table-row header-row">
+            <span>Name & Company</span>
+            <span>Status</span>
+            <span>Subscription</span>
+            <span>Expiration</span>
+            <span>Sale & Payment</span>
+            <span>Contact</span>
+            <span>Assigned</span>
+            <span>Action</span>
+          </div>
         </div>
 
-        {filteredCustomers.length === 0 ? (
-          <div className="table-empty">No customers found.</div>
-        ) : (
-          filteredCustomers.map((customer) => (
-            <CustomerRow key={customer.id} customer={customer} onDelete={onDelete} canEdit={canEdit} />
-          ))
-        )}
+        <div className="table-body">
+          {filteredCustomers.length === 0 ? (
+            <div className="table-empty">No customers found.</div>
+          ) : (
+            filteredCustomers.map((customer) => (
+              <CustomerRow key={customer.id} customer={customer} onDelete={onDelete} canEdit={canEdit} />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
@@ -181,25 +185,38 @@ const CustomerRow = ({ customer, onDelete, canEdit }) => {
   return (
     <div className="table-row">
       <div className="col-stack">
+        <span className="card-label">Name</span>
         <span className="row-name">{customer.name}</span>
         <span className="row-subtext">{customer.company}</span>
       </div>
       <div>
+        <span className="card-label">Status</span>
         <span className={`status-badge ${customer.status?.toLowerCase() === "active" ? "active" : "other"}`}>
-          {customer.status}
+          {customer.status || "Unknown"}
         </span>
       </div>
-      <div className="row-bold">{customer.subscription}</div>
-      <div className="row-subtext">{customer.expiration}</div>
-      <div className="col-stack">
-        <span className="row-bold">{customer.sale ? `$${customer.sale}` : ""}</span>
-        <span className="row-subtext">{customer.payment}</span>
+      <div>
+        <span className="card-label">Subscription</span>
+        <span className="row-bold">{customer.subscription || "—"}</span>
+      </div>
+      <div>
+        <span className="card-label">Expiration</span>
+        <span className="row-subtext">{customer.expiration || "—"}</span>
       </div>
       <div className="col-stack">
-        <span className="row-email">{customer.email}</span>
-        <span className="row-subtext">{customer.phone}</span>
+        <span className="card-label">Sale</span>
+        <span className="row-bold">{customer.sale ? `$${customer.sale}` : "—"}</span>
+        <span className="row-subtext">{customer.payment || "—"}</span>
       </div>
-      <div className="row-subtext">{customer.assigned}</div>
+      <div className="col-stack">
+        <span className="card-label">Contact</span>
+        <span className="row-email">{customer.email || "—"}</span>
+        <span className="row-subtext">{customer.phone || "—"}</span>
+      </div>
+      <div>
+        <span className="card-label">Assigned</span>
+        <span className="row-subtext">{customer.assigned || "—"}</span>
+      </div>
 
       {canEdit ? (
         <div className="row-actions" ref={menuRef}>

@@ -221,29 +221,35 @@
   background: #ffffff;
   border-radius: 14px;
   border: 1px solid #e5eaf3;
-  overflow: hidden; /* single, correct declaration */
+  overflow: hidden;
+}
+
+.table-header {
+  border-bottom: 1px solid #e5eaf3;
+}
+
+.table-header .table-row,
+.table-body .table-row {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr 1.5fr 1.5fr 2fr 2.5fr 1.5fr 1fr;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 10px;
 }
 
 .table-header .table-row {
   background: #f0efef;
-  display: grid;
-  grid-template-columns: 3fr 1.5fr 1.5fr 1.5fr 2fr 2.5fr 1.5fr 1fr;
-  padding: 14px 20px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #475569;
-  border-bottom: 1px solid #e5eaf3;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .table-body .table-row {
-  display: grid;
-  grid-template-columns: 3fr 1.5fr 1.5fr 1.5fr 2fr 2.5fr 1.5fr 1fr;
-  padding: 16px 20px;
-  align-items: center;
   border-bottom: 1px solid #f1f5f9;
   transition: background 0.1s ease;
+  background: #ffffff;
 }
 
 .table-body .table-row:last-child {
@@ -255,7 +261,7 @@
 }
 
 .table-empty {
-  padding: 60px 20px;
+  padding: 60px 18px;
   text-align: center;
   color: #64748b;
   font-size: 16px;
